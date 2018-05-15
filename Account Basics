@@ -14,5 +14,5 @@ It gives you an overvew of some security settings that you should change. FIrst 
 
 1. Activate MFA on root account. I set mine with with Google Authenticator. 
 2. Create a new user. I created mine with programmatic and AWS Mangement Console access.
-      I didn't assign any permissions yet. I need to lookg through all the roles and assign the correct ones. I don't want to jsut give myself admin access, since that defeats the purpose of this section 	
-
+      I didn't assign any permissions yet. I need to lookg through all the roles and assign the correct ones. I don't want to just give myself admin access, since that defeats the purpose of this section.
+      On the IAM dashboard, under users, under this username, I uploaded my public SSH key. I figure I'll need this eventually.
