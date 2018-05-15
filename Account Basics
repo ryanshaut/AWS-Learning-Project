@@ -15,4 +15,14 @@ It gives you an overvew of some security settings that you should change. FIrst 
 1. Activate MFA on root account. I set mine with with Google Authenticator. 
 2. Create a new user. I created mine with programmatic and AWS Mangement Console access.
       I didn't assign any permissions yet. I need to lookg through all the roles and assign the correct ones. I don't want to just give myself admin access, since that defeats the purpose of this section.
-      On the IAM dashboard, under users, under this username, I uploaded my public SSH key. I figure I'll need this eventually.
+      On the IAM dashboard, under users, under this username, I uploaded my public SSH key. I figure I'll need this eventually.   
+3. I added a group call myfrist group and added my account to it. I'll then add policies to this group instead of directly to my account.
+      **edit** I ended up adding the following policies: AmazonEC2FullAccess
+4. I updated the password requirements for IAM users. 
+
+That wrapped up the Security Status area on the IAM dashboard. 
+
+
+## Billing Alerts
+Under Billing ->  preferences on the left menu, I enabled Billing Alerts.
+The actual alarm is configured under CloudWatch, I configured an alert to email me if my account goes over $5 in a 6 hour period.
