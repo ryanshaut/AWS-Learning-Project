@@ -8,16 +8,16 @@ https://www.reddit.com/r/sysadmin/comments/8inzn5/so_you_want_to_learn_aws_aka_h
 # Overview
 ## Account Basics
 
-Create an IAM user for your personal use.
-Set up MFA for your root user, turn off all root user API keys.
-Set up Billing Alerts for anything over a few dollars.
-Configure the AWS CLI for your user using API credentials.
-Checkpoint: You can use the AWS CLI to interrogate information about your AWS account.
+1. Create an IAM user for your personal use.
+2. Set up MFA for your root user, turn off all root user API keys.
+3. Set up Billing Alerts for anything over a few dollars.
+4. Configure the AWS CLI for your user using API credentials.
+5. Checkpoint: You can use the AWS CLI to interrogate information about your AWS account.
 ## Web Hosting Basics
 
-Deploy a EC2 VM and host a simple static "Fortune-of-the-Day Coming Soon" web page.
-Take a snapshot of your VM, delete the VM, and deploy a new one from the snapshot. Basically disk backup + disk restore.
-Checkpoint: You can view a simple HTML page served from your EC2 instance.
+1. Deploy a EC2 VM and host a simple static "Fortune-of-the-Day Coming Soon" web page.
+2. Take a snapshot of your VM, delete the VM, and deploy a new one from the snapshot. Basically disk backup + disk restore.
+3. Checkpoint: You can view a simple HTML page served from your EC2 instance.
 ## Auto Scaling
 
 Create an AMI from that VM and put it in an autoscaling group so one VM always exists.
