@@ -1,0 +1,43 @@
+# Route53
+
+I want to start using Let's Encrypt wildcard certs. A requirement for that is that I need to use DNS challenges during the cert renewal process. I've been using Let's encrypt certs for a while now, but using thier HTTP-01 challenge method. 
+In order to use DNS challenges, I have to have some kind of API access to my domain's name servers so that I can add Let's Encypt challenge TXT record. Unforatunely, I'm currently using NameCheap's basic name servers which don't have any API access. 
+
+This means that I need to find a new place for my name servers. Since I'm going to an AWS tutorial, I might as well use Route53.
+
+
+## Create a New Hosted Zone in Route53
+https://console.aws.amazon.com/route53/home#hosted-zones:
+Using this URL, I selected *Create a Hosted Zone* and entered my domain name.
+Once created, you'll want to copy down the URLs listed in the NS record line. Route53 adds a full stop `.` at the end of each line. I needed to remove them before I could add them my NameCheap console.
+
+
+## Migrating Zone file from NameCheap to Route53
+There are a couple ways I could transfer my zone file from NameCheap to Route53. I could just manually enter all the records, which isn't too bad as I oly have 20 or so entries.
+Instead I requested a zone file from NameCheap through their Live Chat. I then used the *Import ZOne File* button to import the file I got from NameCheap. The first time I tried importing it, I ran into an error.
+A quick google search told me that I had to remove the spaces from the beginning of each line of my file. A quick regex find/replace in Notepad ++ and my zone file imported correctly. There were 2 sub-subdomains that needed to be removed as well. I'm not sure why they didn't import, but I ended up manually adding them back in.
+
+## Automatcally Adding New Records
+When ever you need to add a new entry to Route53, you add a new Record Set. It's pretty simple to do in the console, but to work with Let's Encrypt I'll need to automate it.
+I first created a new user in IAM with just programatic access. I then created a new group for this user. For this group, I created a new policy that have 3 persmissions.
+List: `ListHostedZones` which will get you the Hosted Zone ID needed in each API call
+List: `ResourceRecordSets` which allows you to read what's already in the zone file.
+Write: `ChangeResourceRecordSets` which allows me to add new or update record sets. 
+
+
+Under Security Credentials on the user tab, I created a new access key and copied down the key ID and key secret.
+
+Next step is to download AWS CLI, a python tool, to add new records.
+
+## AWSCLI
+I followed the offical docs to get this installed.
+https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html
+
+
+Once installed, I looked into the Route53 API.
+I need to use `aws route53 change-resource-record-sets` command.
+
+The easiest way to interact with AWS is to use pregenerated json files containing your request. FOr any `aws` command, you can add a `--generate-cli-skeleton` parameter to get a json file to use.
+I created one, then copied it. I now have 2 json files, one for creating new records and another for updating existing ones.
+
+aws route53 change-resource-record-sets --hosted-zone-id <ID> --cli-input-json file://dnsCreate.json
